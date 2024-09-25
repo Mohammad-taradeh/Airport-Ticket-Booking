@@ -18,7 +18,7 @@ public class Ticket
             $"Departure airport: {Departure}" +
             $"Destination airport: {Destination}" +
             $"At: {Time}\n" +
-            $"{Flight?.Class.Item1} Class";
+            $"{Flight?.Class.Type} Class";
     }
 
 }

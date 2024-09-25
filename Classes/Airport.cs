@@ -9,11 +9,6 @@ public class Airport
     public AirportNames Name { get; set; }
     public Countries Location { get; set; }
 
-    public Airport(AirportNames name, Countries location)
-    {
-        Name = name;
-        Location = location;
-    }
     public override string ToString()
     {
         return $"ID: {Id}\n" +

@@ -9,7 +9,7 @@ public class Flight
     public Airport From { get; set; }
     public Airport To { get; set; }
     public DateTime Time { get; set; }
-    public Tuple<FlightClass, int, double> Class {  get; set; }
+    public FlightClass Class {  get; set; }
 
 
     public override string ToString()
@@ -17,8 +17,9 @@ public class Flight
         return $"Flight ID: {Id}" +
             $"From: {From} \n" +
             $"To: {To}\n" +
-            $"{Class.Item1} class\n" +
-            $"{Class.Item2} seats\n";
+            $"{Class.Type} class\n" +
+            $"{Class.Seats} seats\n" +
+            $"for {Class.Price}$\n";
     }
 }
 #nullable restore

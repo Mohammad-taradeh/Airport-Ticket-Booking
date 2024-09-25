@@ -1,5 +1,5 @@
 ﻿namespace AirportTicketBooking.Utils;
-public enum FlightClass
+public enum FlightClassType
 {
     Economy = 1,
     Business = 2,
