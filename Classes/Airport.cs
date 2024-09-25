@@ -5,7 +5,7 @@ namespace AirportTicketBooking.Classes;
 public class Airport
 {
     private static long _id = 0;
-    public long Id { get; set; } = ++_id;
+    public long Id { get; init; } = ++_id;
     public AirportNames Name { get; set; }
     public Countries Location { get; set; }
 
