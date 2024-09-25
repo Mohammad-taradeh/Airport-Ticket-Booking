@@ -9,5 +9,15 @@ public class Flight
     public int EconomyClass { get; init; }
     public int BusinessClass { get; init; }
     public int FirstClass { get; init; }
+
+    public override string ToString()
+    {
+        return $"Flight ID: {Id}" +
+            $"From: {From} \n" +
+            $"To: {To}\n" +
+            $"With {EconomyClass} Economy class seats\n" +
+            $"and {BusinessClass} Business class seats\n"+
+            $"and {FirstClass} First class seats\n";
+    }
 }
 #nullable restore

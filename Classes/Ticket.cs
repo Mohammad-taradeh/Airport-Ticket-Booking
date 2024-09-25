@@ -13,4 +13,14 @@ public class Ticket
     public required FlightClass Class { get; set; }
     public required DateTime Time { get; set; }
 
+    public override string ToString()
+    {
+        return $"Ticket ID: {Id}\n" +
+            $"Flight ID: {Flight?.Id}\n" +
+            $"Departure airport: {Departure}" +
+            $"Destination airport: {Destination}" +
+            $"At: {Time}\n" +
+            $"{Class}";
+    }
+
 }
