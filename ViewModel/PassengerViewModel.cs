@@ -9,7 +9,7 @@ public class PassengerViewModel
     private User passenger;
     private List<Flight> _flights;
     private List<Ticket> _tickets;
-    private TicketEqualityComparer _ticketEqualityComparer = new TicketEqualityComparer();
+    private TicketEqualityComparer _ticketEqualityComparer = new();
     
     public List<Ticket> ViewBookings()
     {
@@ -29,7 +29,7 @@ public class PassengerViewModel
             return "you don't have ticket with this id to update.";
         else
         {
-            if (passenger.RemoveTicket(oldTicket) is not null && passenger.BookTicket(newTicket) is not null)
+            if (passenger.RemoveTicket(oldTicket) is not null && passenger.BookTicket(newTicket))
                 return "Ticket updated successfully";
             else return "Failed to update your ticket.";
         }
@@ -47,7 +47,7 @@ public class PassengerViewModel
         && flight.Time >= date
         && flight.Class.Item1 == Class);
         //TODO
-        return new List<Flight>;
+        return null;
             
     }
 }

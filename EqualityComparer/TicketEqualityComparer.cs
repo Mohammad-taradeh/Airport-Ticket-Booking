@@ -10,7 +10,7 @@ internal class TicketEqualityComparer : EqualityComparer<Ticket>
         if(x == null || y == null) return false;
         if(x.Id == y.Id
             && x.Time == y.Time
-            && x.Class == y.Class) return true;
+            && x.Flight.Class.Item1 == y.Flight.Class.Item1) return true;
         return false;
     }
 
