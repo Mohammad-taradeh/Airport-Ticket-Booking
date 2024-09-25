@@ -1,11 +1,10 @@
 ﻿using AirportTicketBooking.Utils;
 
-namespace AirportTicketBooking.Classes
+namespace AirportTicketBooking.Classes;
+
+public class Airport
 {
-    public class Airport
-    {
-        public int Id { get; set; }
-        public Airports Name { get; set; }
-        public Countries Location { get; set; }
-    }
+    public int Id { get; set; }
+    public AirportNames Name { get; set; }
+    public Countries Location { get; set; }
 }

@@ -1,5 +1,4 @@
 ﻿namespace AirportTicketBooking.Classes;
-
 #nullable disable
 public class Flight
 {
