@@ -4,10 +4,16 @@ namespace AirportTicketBooking.Classes;
 
 public class Airport
 {
-    public int Id { get; set; }
+    private static long _id = 0;
+    public long Id { get; set; } = ++_id;
     public AirportNames Name { get; set; }
     public Countries Location { get; set; }
 
+    public Airport(AirportNames name, Countries location)
+    {
+        Name = name;
+        Location = location;
+    }
     public override string ToString()
     {
         return $"ID: {Id}\n" +

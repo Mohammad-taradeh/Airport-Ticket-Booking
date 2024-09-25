@@ -3,10 +3,10 @@
 namespace AirportTicketBooking.Classes;
 public class User
 {
-    private static int _id = 0;
+    private static long _id = 0;
     private List<Ticket> tickets = [];
 
-    public int Id { get; init; } = ++_id;
+    public long Id { get; init; } = ++_id;
     public required string Name { get; set; }
     public required string Email { get; set; }
     public required string Password { get; set; }
