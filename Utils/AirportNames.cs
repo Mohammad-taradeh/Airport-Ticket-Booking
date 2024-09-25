@@ -1,7 +1,7 @@
 ﻿
 
 namespace AirportTicketBooking.Utils;
-public enum Airports
+public enum AirportNames
 {
     QueenAliaInternationalAirport = 1
 }
