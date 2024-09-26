@@ -12,9 +12,14 @@ public class User
     public required string Password { get; set; }
     public List<Ticket> Tickets { get => tickets; }
 
-    public void BookTicket(Ticket ticket)
+    public bool BookTicket(Ticket ticket)
     {
         tickets.Add(ticket);
+        return true;
+    }
+    public Ticket? RemoveTicket(Ticket ticket)
+    {
+        return Tickets.Remove(ticket) ? ticket : null;
     }
     public UserRole Role { get; init; }
 

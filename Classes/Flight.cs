@@ -1,32 +1,25 @@
-﻿namespace AirportTicketBooking.Classes;
+﻿using AirportTicketBooking.Utils;
+
+namespace AirportTicketBooking.Classes;
 #nullable disable
 public class Flight
 {
     private static long _id = 0;
     public long Id { get; init; } = ++_id;
-    public Airport From { get; init; }
-    public Airport To { get; init; }
-    public int EconomyClass { get; init; }
-    public int BusinessClass { get; init; }
-    public int FirstClass { get; init; }
+    public Airport From { get; set; }
+    public Airport To { get; set; }
+    public DateTime Time { get; set; }
+    public FlightClass Class {  get; set; }
 
-    public Flight(Airport from, Airport to, int economySeats, int buisnessSeats, int firstClassSeats)
-    {
-        From = from;
-        To = to;
-        EconomyClass = economySeats;
-        BusinessClass = buisnessSeats;
-        FirstClass = firstClassSeats;
-    }
 
     public override string ToString()
     {
         return $"Flight ID: {Id}" +
             $"From: {From} \n" +
             $"To: {To}\n" +
-            $"With {EconomyClass} Economy class seats\n" +
-            $"and {BusinessClass} Business class seats\n"+
-            $"and {FirstClass} First class seats\n";
+            $"{Class.Type} class\n" +
+            $"{Class.Seats} seats\n" +
+            $"for {Class.Price}$\n";
     }
 }
 #nullable restore
