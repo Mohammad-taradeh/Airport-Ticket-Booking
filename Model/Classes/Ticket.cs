@@ -1,6 +1,6 @@
 ﻿using AirportTicketBooking.Utils;
 
-namespace AirportTicketBooking.Classes;
+namespace AirportTicketBooking.Model.Classes;
 
 
 public class Ticket

@@ -1,4 +1,4 @@
-﻿using AirportTicketBooking.Classes;
+﻿using AirportTicketBooking.Model.Classes;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AirportTicketBooking.EqualityComparer;

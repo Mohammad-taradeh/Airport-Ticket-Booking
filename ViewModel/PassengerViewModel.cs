@@ -1,5 +1,5 @@
-﻿using AirportTicketBooking.Classes;
-using AirportTicketBooking.EqualityComparer;
+﻿using AirportTicketBooking.EqualityComparer;
+using AirportTicketBooking.Model.Classes;
 using AirportTicketBooking.Utils;
 
 namespace AirportTicketBooking.ViewModel;
