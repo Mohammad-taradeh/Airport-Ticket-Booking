@@ -35,19 +35,29 @@ public class PassengerViewModel
         }
     }
 
-    public List<Flight> SearchAvailableFlights(double price,
-        Countries departureCountrie,
-        Countries destinationCountrie,
-        DateTime date,
-        Airport departureAirport,
-        Airport destinationAirport,
-        FlightClass Class)
+    public List<Flight> FillterFlights(double price,
+        String? departureCountrie,
+        String? destinationCountrie,
+        DateTime? date,
+        Airport? departureAirport,
+        Airport? destinationAirport,
+        FlightClassType? Class)
     {
-        var result = _flights.Where(flight => flight.Class.Item3 > price
-        && flight.Time >= date
-        && flight.Class.Item1 == Class);
-        //TODO
-        return null;
-            
+        var tempFlights = _flights;
+        if (departureCountrie != null)
+            tempFlights = tempFlights.Where(flight => flight.From == (Countries)Enum.Parse(typeof(Countries), departureCountrie)).ToList();
+        if (destinationCountrie != null)
+            tempFlights = tempFlights.Where(flight => flight.To == (Countries)Enum.Parse(typeof(Countries), destinationCountrie)).ToList();
+        if (date != null)
+            tempFlights = tempFlights.Where(flight => flight.Time >= date).ToList();
+        //Equality Comparer
+        if (departureAirport != null)
+            tempFlights = tempFlights.Where(flight => flight.From == departureAirport).ToList();
+        if (destinationAirport != null)
+            tempFlights = tempFlights.Where(flight => flight.To == destinationAirport).ToList();
+        if (Class != null)
+            tempFlights = tempFlights.Where(flight => flight.Class.Type == Class).ToList();
+        return tempFlights;
+
     }
 }
