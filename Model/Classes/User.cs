@@ -1,6 +1,6 @@
 ﻿using AirportTicketBooking.Utils;
 
-namespace AirportTicketBooking.Classes;
+namespace AirportTicketBooking.Model.Classes;
 public class User
 {
     private static long _id = 0;
@@ -25,13 +25,13 @@ public class User
 
     public User()
     {
-        this.Name = String.Empty;
-        this.Email = String.Empty;
-        this.Password = String.Empty;
-        this.Role = default;
+        Name = string.Empty;
+        Email = string.Empty;
+        Password = string.Empty;
+        Role = default;
 
     }
-    public User( string name, string email, string password, UserRole role)
+    public User(string name, string email, string password, UserRole role)
     {
         Name = name;
         Email = email;
