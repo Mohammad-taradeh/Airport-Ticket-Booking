@@ -18,8 +18,8 @@ public static class FlightRepository
     {
         _flights = new List<Flight>()
         {
-            new Flight() { From = Airport.QueenAliaInternationalAirport, To = Airport.QueenAliaInternationalAirport, Time = DateTime.Now.AddDays(1),
-                Class = new FlightClass() { Type = FlightClassType.Business, Seats = 10, Price = 500} };
+            new Flight() { DepartureAirport = Airport.QueenAliaInternationalAirport, DestinationAirport = Airport.QueenAliaInternationalAirport, Time = DateTime.Now.AddDays(1),
+                Class = new FlightClass() { Type = FlightClassType.Business, Seats = 10, Price = 500} }
         };
     }
 }
