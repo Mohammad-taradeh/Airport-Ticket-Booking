@@ -1,26 +1,44 @@
 ﻿using AirportTicketBooking.EqualityComparer;
 using AirportTicketBooking.Model.Classes;
+using AirportTicketBooking.Model.Repositories;
 using AirportTicketBooking.Utils;
 
 namespace AirportTicketBooking.ViewModel;
 
 public class PassengerViewModel
 {
-    private User passenger;
-    private List<Flight> _flights;
-    private List<Ticket> _tickets;
+    private required User passenger;
+    private List<Flight> _flights = FlightRepository.GetAllFlights();
+    private List<Ticket> _tickets = TicketRepository.GetAllTickets();
     private TicketEqualityComparer _ticketEqualityComparer = new();
-    
+    public PassengerViewModel(User passenger)
+    {
+        this.passenger = passenger;
+    }
     public List<Ticket> ViewBookings()
     {
         return passenger.Tickets;
     }
-    public Ticket? CancelTicket(Ticket ticket)
+    public Ticket? CancelTicket(Ticket? ticket, long? ticketId)
     {
-        var ticketExist = passenger.Tickets.Contains(ticket, _ticketEqualityComparer);
-        if (!ticketExist)
-            return null;
-        return passenger.RemoveTicket(ticket);
+        if (ticketId is null && ticket is not null)
+        {
+            var ticketExist = passenger.Tickets.Contains(ticket, _ticketEqualityComparer);
+            if (!ticketExist)
+                return null;
+            return passenger.RemoveTicket(ticket);
+        }
+        if (ticketId is not null && ticket is null)
+        {
+            foreach (var tick in passenger.Tickets)
+            {
+                if (tick.Id == ticketId)
+                {
+                    return passenger.Tickets.Remove(tick) ? tick : null;
+                }
+            }
+        }
+        return null;
     }
     public String UpdateBooking(long oldTicketId, Ticket newTicket)
     {
@@ -45,16 +63,16 @@ public class PassengerViewModel
     {
         var tempFlights = _flights;
         if (departureCountrie != null)
-            tempFlights = tempFlights.Where(flight => flight.From == (Countries)Enum.Parse(typeof(Countries), departureCountrie)).ToList();
+            tempFlights = tempFlights.Where(flight => flight.DepartureCountry == (Countries)Enum.Parse(typeof(Countries), departureCountrie)).ToList();
         if (destinationCountrie != null)
-            tempFlights = tempFlights.Where(flight => flight.To == (Countries)Enum.Parse(typeof(Countries), destinationCountrie)).ToList();
+            tempFlights = tempFlights.Where(flight => flight.DestinationCountry == (Countries)Enum.Parse(typeof(Countries), destinationCountrie)).ToList();
         if (date != null)
             tempFlights = tempFlights.Where(flight => flight.Time >= date).ToList();
         //Equality Comparer
         if (departureAirport != null)
-            tempFlights = tempFlights.Where(flight => flight.From == departureAirport).ToList();
+            tempFlights = tempFlights.Where(flight => flight.DepartureAirport == departureAirport).ToList();
         if (destinationAirport != null)
-            tempFlights = tempFlights.Where(flight => flight.To == destinationAirport).ToList();
+            tempFlights = tempFlights.Where(flight => flight.DestinationAirport == destinationAirport).ToList();
         if (Class != null)
             tempFlights = tempFlights.Where(flight => flight.Class.Type == Class).ToList();
         return tempFlights;
