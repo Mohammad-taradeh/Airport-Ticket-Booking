@@ -23,9 +23,9 @@ public class AdminViewModel
     {
         var tempFlights = _flights;
         if (departureCountrie != null)
-            tempFlights = tempFlights.Where(flight => flight.DepartureCountry == (Countries)Enum.Parse(typeof(Countries), departureCountrie)).ToList();
+            tempFlights = tempFlights.Where(flight => flight.DepartureCountry == (Country)Enum.Parse(typeof(Country), departureCountrie)).ToList();
         if (destinationCountrie != null)
-            tempFlights = tempFlights.Where(flight => flight.DestinationCountry == (Countries)Enum.Parse(typeof(Countries), destinationCountrie)).ToList();
+            tempFlights = tempFlights.Where(flight => flight.DestinationCountry == (Country)Enum.Parse(typeof(Country), destinationCountrie)).ToList();
         if (date != null)
             tempFlights = tempFlights.Where(flight => flight.Time >= date).ToList();
         //Equality Comparer
