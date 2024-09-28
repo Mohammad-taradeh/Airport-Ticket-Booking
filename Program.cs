@@ -1,5 +1,4 @@
 ﻿using AirportTicketBooking.View;
-using AirportTicketBooking.ViewModel;
 
 namespace TicketBooking;
 
