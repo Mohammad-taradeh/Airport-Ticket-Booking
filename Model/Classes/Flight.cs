@@ -9,8 +9,8 @@ public class Flight
     public long Id { get; init; } = ++_id;
     public Airport DepartureAirport { get; set; }
     public Airport DestinationAirport { get; set; }
-    public Countries DepartureCountry { get; set; }
-    public Countries DestinationCountry { get; set; }
+    public Country DepartureCountry { get; set; }
+    public Country DestinationCountry { get; set; }
     public DateTime Time { get; set; }
     public FlightClass Class {  get; set; }
 

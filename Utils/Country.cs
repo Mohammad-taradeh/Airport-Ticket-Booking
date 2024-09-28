@@ -1,6 +1,6 @@
 ﻿
 namespace AirportTicketBooking.Utils;
-public enum Countries
+public enum Country
 {
     Jordan = 1,
     Qatar = 2,

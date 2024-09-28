@@ -10,17 +10,18 @@ public class User
     public required string Name { get; set; }
     public required string Email { get; set; }
     public required string Password { get; set; }
-    public List<Ticket> Tickets { get => tickets; }
 
     public bool BookTicket(Ticket ticket)
-    {
+    {       
         tickets.Add(ticket);
         return true;
     }
     public Ticket? RemoveTicket(Ticket ticket)
     {
-        return Tickets.Remove(ticket) ? ticket : null;
+        return tickets.Remove(ticket) ? ticket : null;
     }
+    public List<Ticket> Tickets()
+    { return tickets; }
     public UserRole Role { get; init; }
 
     public User()
@@ -44,7 +45,7 @@ public class User
         return $"{Name}\n" +
             $"Your email: {Email}\n" +
             $"Your role: {Role}\n" +
-            $"Your Tickets: {Tickets.ToString}";
+            $"Your Tickets: {this.Tickets().ToString}";
     }
 }
 

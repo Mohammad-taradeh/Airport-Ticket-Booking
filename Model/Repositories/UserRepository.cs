@@ -20,6 +20,6 @@ public static class UserRepository
             new User(){Name = "Mohammad", Email = "201160@ppu.edu.ps", Password = "123", Role = Utils.UserRole.ADMIN},
             new User(){Name = "Ahmad", Email = "201161ppu.edu.ps", Password = "456", Role = Utils.UserRole.PASSENGER},
             new User(){Name = "Ibrahim", Email = "201162@ppu.edu.ps", Password = "789", Role = Utils.UserRole.PASSENGER}
-        }
+        };
     }
 }
