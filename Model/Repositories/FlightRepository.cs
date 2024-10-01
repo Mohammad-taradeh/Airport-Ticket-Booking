@@ -18,7 +18,7 @@ public static class FlightRepository
     {
         _flights = new List<Flight>()
         {
-            new Flight() { DepartureAirport = Airport.QueenAliaInternationalAirport, DestinationAirport = Airport.QueenAliaInternationalAirport, Time = DateTime.Now.AddDays(1),
+            new Flight() { DepartureAirport = Airport.QueenAliaInternationalAirport, DestinationAirport = Airport.QueenAliaInternationalAirport, Time = TimeSpan.FromDays(1),
                 Class = new FlightClass() { Type = FlightClassType.Business, Seats = 10, Price = 500} }
         };
     }

@@ -7,10 +7,12 @@ public class TicketEqualityComparer : EqualityComparer<Ticket>
 {
     public override bool Equals(Ticket? x, Ticket? y)
     {
+        if (x == null && y == null) return true;
         if(x == null || y == null) return false;
         if(x.Id == y.Id
             && x.Time == y.Time
-            && x.Flight.Class.Type == y.Flight.Class.Type) 
+            && x.Passenger == y.Passenger
+            && x.Flight == y.Flight)
             return true;
         else return false;
     }

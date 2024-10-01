@@ -16,7 +16,7 @@ public class AdminViewModel
         double? price,
         String? departureCountrie,
         String? destinationCountrie,
-        DateTime? date,
+        TimeSpan? date,
         Airport? departureAirport,
         Airport? destinationAirport,
         FlightClassType? Class)

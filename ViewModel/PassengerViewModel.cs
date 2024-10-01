@@ -1,5 +1,4 @@
-﻿using AirportTicketBooking.EqualityComparer;
-using AirportTicketBooking.Model.Classes;
+﻿using AirportTicketBooking.Model.Classes;
 using AirportTicketBooking.Model.Repositories;
 using AirportTicketBooking.Utils;
 
@@ -9,34 +8,25 @@ public static class PassengerViewModel
 {
     public static User passenger;
     private static List<Flight> _flights = FlightRepository.GetAllFlights();
-    private static List<Ticket> _tickets = TicketRepository.GetAllTickets();
-    private static TicketEqualityComparer _ticketEqualityComparer = new();
-    /*public PassengerViewModel(User passenger)
-    {
-        this.passenger = passenger;
-    }*/
+    private static TicketRepository _ticketRepository = new();
+    private static List<Ticket> _tickets = _ticketRepository.FindByUser(passenger.Id);
+    
     public static List<Ticket>? ViewBookings()
     {
-        return passenger.Tickets();
+        return _ticketRepository.FindByUser(passenger.Id);
     }
     public static Ticket? CancelTicket(Ticket? ticket, long? ticketId)
     {
         if (ticketId is null && ticket is not null)
         {
-            var ticketExist = passenger.Tickets().Contains(ticket, _ticketEqualityComparer);
-            if (!ticketExist)
-                return null;
-            return passenger.RemoveTicket(ticket);
+            return _ticketRepository.Delete(ticket);
         }
         if (ticketId is not null && ticket is null)
         {
-            foreach (var tick in passenger.Tickets())
-            {
-                if (tick.Id == ticketId)
-                {
-                    return passenger.RemoveTicket(tick) is Ticket ? tick : null;
-                }
-            }
+            var ticketToRemove = _ticketRepository.FindById((long)ticketId);
+            if (ticketToRemove is null)
+                return null;
+            return _ticketRepository.Delete(ticketToRemove);
         }
         return null;
     }
@@ -58,15 +48,16 @@ public static class PassengerViewModel
             {
                 Ticket ticket = new()
                 {
-                    Flight = _flight,
+                    Flight = _flight.Id,
+                    Passenger = passenger.Id,
                     DepartureAirport = _flight.DepartureAirport,
                     DestinationAirport = _flight.DestinationAirport,
                     Time = _flight.Time
 
                 };
                 _flight.Class.Seats -= 1;
-                passenger.BookTicket(ticket);
-                return ticket;
+                return _ticketRepository.Save(ticket);
+                
             }
 
         }
@@ -94,7 +85,7 @@ public static class PassengerViewModel
     public static List<Flight> FillterFlights(double? price,
         Country? departureCountrie,
         Country? destinationCountrie,
-        DateTime? date,
+        TimeSpan? date,
         Airport? departureAirport,
         Airport? destinationAirport,
         FlightClassType? Class)

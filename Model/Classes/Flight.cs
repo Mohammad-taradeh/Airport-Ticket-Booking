@@ -11,7 +11,7 @@ public class Flight
     public Airport DestinationAirport { get; set; }
     public Country DepartureCountry { get; set; }
     public Country DestinationCountry { get; set; }
-    public DateTime Time { get; set; }
+    public TimeSpan Time { get; set; }
     public FlightClass Class {  get; set; }
 
 
