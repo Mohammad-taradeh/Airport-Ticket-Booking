@@ -4,24 +4,12 @@ namespace AirportTicketBooking.Model.Classes;
 public class User
 {
     private static long _id = 0;
-    private List<Ticket> tickets = [];
 
     public long Id { get; init; } = ++_id;
     public required string Name { get; set; }
     public required string Email { get; set; }
     public required string Password { get; set; }
-
-    public bool BookTicket(Ticket ticket)
-    {       
-        tickets.Add(ticket);
-        return true;
-    }
-    public Ticket? RemoveTicket(Ticket ticket)
-    {
-        return tickets.Remove(ticket) ? ticket : null;
-    }
-    public List<Ticket> Tickets()
-    { return tickets; }
+    
     public UserRole Role { get; init; }
 
     public User()
@@ -44,8 +32,7 @@ public class User
     {
         return $"{Name}\n" +
             $"Your email: {Email}\n" +
-            $"Your role: {Role}\n" +
-            $"Your Tickets: {this.Tickets().ToString}";
+            $"Your role: {Role}\n";
     }
 }
 
