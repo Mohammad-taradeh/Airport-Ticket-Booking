@@ -26,9 +26,8 @@ public static class DefaultView
             }
             else
             {
-                PassengerView._user = authenticatedUser;
-                PassengerViewModel.passenger = authenticatedUser;
-                PassengerView.DisplayFeatures();
+                PassengerView passengerView = new PassengerView(authenticatedUser);
+                passengerView.DisplayFeatures();
             }
         }
         catch (Exception ex)

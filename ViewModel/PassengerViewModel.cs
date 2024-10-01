@@ -4,18 +4,23 @@ using AirportTicketBooking.Utils;
 
 namespace AirportTicketBooking.ViewModel;
 
-public static class PassengerViewModel
+public class PassengerViewModel
 {
-    public static User passenger;
-    private static List<Flight> _flights = FlightRepository.GetAllFlights();
-    private static TicketRepository _ticketRepository = new();
-    private static List<Ticket> _tickets = _ticketRepository.FindByUser(passenger.Id);
-    
-    public static List<Ticket>? ViewBookings()
+    public User Passenger { get; init; }
+    private List<Flight> _flights = FlightRepository.GetAllFlights();
+    private TicketRepository _ticketRepository;
+    //private List<Ticket> _tickets = _ticketRepository.FindByUser(passenger.Id);
+
+    public PassengerViewModel(User user)
     {
-        return _ticketRepository.FindByUser(passenger.Id);
+        Passenger = user;
+        _ticketRepository = new TicketRepository();
     }
-    public static Ticket? CancelTicket(Ticket? ticket, long? ticketId)
+    public List<Ticket>? ViewBookings()
+    {
+        return _ticketRepository.FindByUser(Passenger.Id);
+    }
+    public Ticket? CancelTicket(Ticket? ticket, long? ticketId)
     {
         if (ticketId is null && ticket is not null)
         {
@@ -31,7 +36,7 @@ public static class PassengerViewModel
         return null;
     }
 
-    public static Ticket? BookFlight(long flightID)
+    public Ticket? BookFlight(long flightID)
     {
         var _flight = FindFlightByID(flightID);
         if (_flight == null)
@@ -49,7 +54,7 @@ public static class PassengerViewModel
                 Ticket ticket = new()
                 {
                     Flight = _flight.Id,
-                    Passenger = passenger.Id,
+                    Passenger = Passenger.Id,
                     DepartureAirport = _flight.DepartureAirport,
                     DestinationAirport = _flight.DestinationAirport,
                     Time = _flight.Time
@@ -63,9 +68,9 @@ public static class PassengerViewModel
         }
     }
     
-    public static void UpdateBooking(long oldTicketId, Ticket newTicket)
+    public void UpdateBooking(long oldTicketId, Ticket newTicket)
     {
-        Ticket? oldTicket = _tickets.Find(ticket => ticket.Id == oldTicketId);
+        Ticket? oldTicket = _ticketRepository.FindById(oldTicketId);
         if (oldTicket is null)
         {
             Console.WriteLine("you don't have ticket with this id to update.");
@@ -73,16 +78,16 @@ public static class PassengerViewModel
         }
         else
         {
-            if (passenger.RemoveTicket(oldTicket) is not null && passenger.BookTicket(newTicket))
+            if (_ticketRepository.Update(oldTicketId, newTicket) is not null)
                 Console.WriteLine("Ticket updated successfully");
             else Console.WriteLine("Failed to update your ticket.");
         }
     }
-    public static Flight? FindFlightByID(long id)
+    public Flight? FindFlightByID(long id)
     {
         return _flights.SingleOrDefault(flight => flight.Id == id);
     }
-    public static List<Flight> FillterFlights(double? price,
+    public List<Flight> FillterFlights(double? price,
         Country? departureCountrie,
         Country? destinationCountrie,
         TimeSpan? date,

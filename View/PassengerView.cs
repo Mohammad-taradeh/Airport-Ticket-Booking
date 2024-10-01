@@ -5,10 +5,17 @@ using System.Text;
 
 namespace AirportTicketBooking.View;
 
-public static class PassengerView
+public class PassengerView
 {
-    public static User _user;
-    public static void DisplayFeatures()
+    public User _user;
+    private PassengerViewModel passengerviewModel;
+    public PassengerView(User user)
+    {
+        _user = user;
+        passengerviewModel = new PassengerViewModel(_user);
+
+    }
+    public void DisplayFeatures()
     {
         //Console.Clear();
         bool exit = false;
@@ -55,7 +62,7 @@ public static class PassengerView
             
         }
     }
-    public static void DisplayBookTicket()
+    public void DisplayBookTicket()
     {
         Console.WriteLine("Enter the flight ID you want to book:");
         var flightIDInput = Console.ReadLine();
@@ -64,7 +71,7 @@ public static class PassengerView
             Console.WriteLine("Invalid flight ID.");
             return;
         }
-        var result = PassengerViewModel.BookFlight(flightID);
+        var result = passengerviewModel.BookFlight(flightID);
         if(result is not null)
         {
             Console.WriteLine(result.ToString());
@@ -75,9 +82,9 @@ public static class PassengerView
             Console.WriteLine("Failed Booking the ticket.");
         }
     }
-    public static void DisplayViewBooking()
+    public void DisplayViewBooking()
     {
-        List<Ticket>? bookings = PassengerViewModel.ViewBookings();
+        List<Ticket>? bookings = passengerviewModel.ViewBookings();
         if(bookings is null || !bookings.Any())
             Console.WriteLine("You don't have any Bookings.");
         else 
@@ -92,18 +99,15 @@ public static class PassengerView
             Console.WriteLine(sb.ToString());
         }
     }
-    public static void DisplayCancelBooking() 
+    public void DisplayCancelBooking() 
     {
-        if (!_user.Tickets().Any() || _user.Tickets() is null) {
-            Console.WriteLine("You don't have any Bookings to cancle.");
-            return;
-        }
+        if(passengerviewModel.ViewBookings() is null)
         Console.WriteLine("Enter the id of the tecket you need to cancle:");
         var ticketID = Console.ReadLine();
-        var boockings = PassengerViewModel.ViewBookings();
+        var boockings = passengerviewModel.ViewBookings();
         if(!String.IsNullOrEmpty(ticketID) && long.TryParse(ticketID, out var ID))
         {
-            var deletedBooking = PassengerViewModel.CancelTicket(null,ID);
+            var deletedBooking = passengerviewModel.CancelTicket(null,ID);
             if(deletedBooking != null)
             {
                 Console.WriteLine(deletedBooking.ToString());
@@ -120,7 +124,7 @@ public static class PassengerView
         //Todo: cancel be creating new ticket
      
     }
-    public static void DisplayUpdateBooking() 
+    public void DisplayUpdateBooking() 
     {
         Console.WriteLine("Enter the id of the ticket to update");
         var ticketID = Console.ReadLine();
@@ -130,7 +134,7 @@ public static class PassengerView
             return;
         }
         Console.WriteLine("Here are the abalibale flights:");
-        var flights = PassengerViewModel.FillterFlights(null, null, null, null, null, null, null);
+        var flights = passengerviewModel.FillterFlights(null, null, null, null, null, null, null);
         if(flights.Any() )
         {
             StringBuilder sb = new();
@@ -153,7 +157,7 @@ public static class PassengerView
             Console.WriteLine("invalid id format.");
             return;
         }
-        var flight = PassengerViewModel.FindFlightByID(flightID);
+        var flight = passengerviewModel.FindFlightByID(flightID);
         if(flight == null)
         {
             Console.WriteLine($"There are no flights with ID: {flightID}");
@@ -165,10 +169,10 @@ public static class PassengerView
             DestinationAirport = flight.DestinationAirport,
             Time = flight.Time
         };
-        PassengerViewModel.UpdateBooking(ID, ticket);
+        passengerviewModel.UpdateBooking(ID, ticket);
 
     }
-    public static void DisplayFilterFlights()
+    public void DisplayFilterFlights()
     {
         //price
         Console.WriteLine("Enter the start price you want or leave it empty.");
@@ -243,7 +247,7 @@ public static class PassengerView
             _date = date;
         else
             Console.WriteLine("Empty Input");
-        var result = PassengerViewModel.FillterFlights(_price,
+        var result = passengerviewModel.FillterFlights(_price,
             _departureCountry,
             _destinationCountry,
             _date,

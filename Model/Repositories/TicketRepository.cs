@@ -8,7 +8,7 @@ public class TicketRepository : IRepository<Ticket>
     private static List<Ticket> _tickets = new();
     private static TicketEqualityComparer TicketEqualityComparer = new TicketEqualityComparer();
 
-    public void ReadTicketsFromFile()
+    public static void ReadTicketsFromFile()
     {
         _tickets = new List<Ticket>()
         {
@@ -22,7 +22,8 @@ public class TicketRepository : IRepository<Ticket>
     }
     public List<Ticket>? GetAllTickets (long userID)
     {
-        ReadTicketsFromFile();
+        if (_tickets == null)
+            return null;
 
         return _tickets.Where(ticket => ticket.Passenger == userID).ToList();
 
@@ -39,6 +40,7 @@ public class TicketRepository : IRepository<Ticket>
 
     public Ticket? Delete(Ticket item)
     {
+        if (_tickets == null) return null;
         bool exist = _tickets.Contains(item, TicketEqualityComparer);
         if (@exist)
             return null; ;
@@ -50,14 +52,17 @@ public class TicketRepository : IRepository<Ticket>
 
     public Ticket? FindById(long id)
     {
+        if (_tickets == null) return null;
         return _tickets.SingleOrDefault(ticket => ticket.Id == id);
     }
-    public List<Ticket> FindByUser(long userId)
+    public List<Ticket>? FindByUser(long userId)
     {
+        if (_tickets == null) return null;
         return _tickets.Where(ticket => ticket.Passenger ==  userId).ToList();
     }
     public Ticket? Update(long ID, Ticket item)
     {
+        if (_tickets == null) return null;
         Ticket? oldTicket = _tickets.SingleOrDefault(ticket => ticket.Id == ID);
         bool exist = _tickets.Contains(item, TicketEqualityComparer);
         if (oldTicket is null || !exist)
