@@ -48,11 +48,14 @@ public class TicketRepository : IRepository<Ticket>
         else return null;
     }
 
-    public Ticket? Get(long id)
+    public Ticket? FindById(long id)
     {
         return _tickets.SingleOrDefault(ticket => ticket.Id == id);
     }
-
+    public List<Ticket> FindByUser(long userId)
+    {
+        return _tickets.Where(ticket => ticket.Passenger ==  userId).ToList();
+    }
     public Ticket? Update(long ID, Ticket item)
     {
         Ticket? oldTicket = _tickets.SingleOrDefault(ticket => ticket.Id == ID);
