@@ -85,7 +85,7 @@ public static class PassengerViewModel
     public static List<Flight> FillterFlights(double? price,
         Country? departureCountrie,
         Country? destinationCountrie,
-        DateTime? date,
+        TimeSpan? date,
         Airport? departureAirport,
         Airport? destinationAirport,
         FlightClassType? Class)

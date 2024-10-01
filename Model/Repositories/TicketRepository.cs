@@ -14,7 +14,7 @@ public class TicketRepository : IRepository<Ticket>
         {
             new Ticket(){ Flight = long.Parse("1"),
             Passenger = long.Parse("1"),
-            Time = DateTime.Now.AddMinutes(50),
+            Time = TimeSpan.FromMinutes(50),
             DepartureAirport = Utils.Airport.QueenAliaInternationalAirport,
             DestinationAirport = Utils.Airport.QueenAliaInternationalAirport
             }

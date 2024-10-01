@@ -238,8 +238,8 @@ public static class PassengerView
         //date
         Console.WriteLine("Enter the Flight data you want or leave it empty.");
         var dateInput = Console.ReadLine();
-        DateTime? _date = null;
-        if (!String.IsNullOrEmpty(dateInput) && DateTime.TryParse(dateInput, out var date))
+        TimeSpan? _date = null;
+        if (!String.IsNullOrEmpty(dateInput) && TimeSpan.TryParse(dateInput, out var date))
             _date = date;
         else
             Console.WriteLine("Empty Input");
