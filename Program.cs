@@ -18,6 +18,6 @@ public class Program
             Console.WriteLine("Invalid login credentials.");
             return;
         }  
-        DefaultViewModel.Login(email, password);
+        //DefaultViewModel.Login(email, password);
     }
 }

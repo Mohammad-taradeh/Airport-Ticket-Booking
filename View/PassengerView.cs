@@ -8,12 +8,6 @@ namespace AirportTicketBooking.View;
 public static class PassengerView
 {
     public static User _user;
-    //private PassengerViewModel _passengerViewModel = new PassengerViewModel(_user);
-    /*public PassengerView(User user, PassengerViewModel passengerViewModel)
-    {
-        this._user = user;
-        this._passengerViewModel = passengerViewModel;
-    }*/
     public static void DisplayFeatures()
     {
         //Console.Clear();
@@ -165,7 +159,8 @@ public static class PassengerView
             Console.WriteLine($"There are no flights with ID: {flightID}");
             return;
         }
-        Ticket ticket = new() { Flight = flight,
+        Ticket ticket = new() { Flight = flight.Id,
+            Passenger = _user.Id,
             DepartureAirport = flight.DepartureAirport,
             DestinationAirport = flight.DestinationAirport,
             Time = flight.Time

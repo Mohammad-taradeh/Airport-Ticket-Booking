@@ -1,5 +1,4 @@
-﻿using AirportTicketBooking.EqualityComparer;
-using AirportTicketBooking.Model.Classes;
+﻿using AirportTicketBooking.Model.Classes;
 using AirportTicketBooking.Model.Repositories;
 using AirportTicketBooking.Utils;
 
@@ -14,7 +13,7 @@ public static class PassengerViewModel
     
     public static List<Ticket>? ViewBookings()
     {
-        return passenger.Tickets();
+        return _ticketRepository.FindByUser(passenger.Id);
     }
     public static Ticket? CancelTicket(Ticket? ticket, long? ticketId)
     {
