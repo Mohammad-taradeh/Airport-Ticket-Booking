@@ -7,12 +7,12 @@ namespace AirportTicketBooking.ViewModel;
 public class AdminViewModel
 {
     private User _admin;
-    private List<Flight> _flights = FlightRepository.GetAllFlights();
+    private List<Ticket> _tickets = TicketRepository.GetAllTickets();
     public AdminViewModel(User admin)
     {
         this._admin = admin;
     }
-    public List<Flight> FillterFlights(
+    public List<Ticket> FillterFlights(
         double? price,
         String? departureCountrie,
         String? destinationCountrie,
@@ -21,23 +21,22 @@ public class AdminViewModel
         Airport? destinationAirport,
         FlightClassType? Class)
     {
-        var tempFlights = _flights;
+        var tempTickets = _tickets;
         if (departureCountrie != null)
-            tempFlights = tempFlights.Where(flight => flight.DepartureCountry == (Country)Enum.Parse(typeof(Country), departureCountrie)).ToList();
+            tempTickets = tempTickets.Where(ticket => ticket.Flight.DepartureCountry == (Country)Enum.Parse(typeof(Country), departureCountrie)).ToList();
         if (destinationCountrie != null)
-            tempFlights = tempFlights.Where(flight => flight.DestinationCountry == (Country)Enum.Parse(typeof(Country), destinationCountrie)).ToList();
+            tempTickets = tempTickets.Where(ticket => ticket.Flight.DestinationCountry == (Country)Enum.Parse(typeof(Country), destinationCountrie)).ToList();
         if (date != null)
-            tempFlights = tempFlights.Where(flight => flight.Time >= date).ToList();
-        //Equality Comparer
+            tempTickets = tempTickets.Where(ticket => ticket.Time >= date).ToList();
         if (departureAirport != null)
-            tempFlights = tempFlights.Where(flight => flight.DepartureAirport == departureAirport).ToList();
+            tempTickets = tempTickets.Where(ticket => ticket.DepartureAirport == departureAirport).ToList();
         if (destinationAirport != null)
-            tempFlights = tempFlights.Where(flight => flight.DestinationAirport == destinationAirport).ToList();
+            tempTickets = tempTickets.Where(ticket => ticket.DestinationAirport == destinationAirport).ToList();
         if (Class != null)
-            tempFlights = tempFlights.Where(flight => flight.Class.Type == Class).ToList();
+            tempTickets = tempTickets.Where(ticket => ticket.Flight.Class.Type == Class).ToList();
         if(price != null)
-            tempFlights = tempFlights.Where(flight => flight.Class.Price == price).ToList();
-        return tempFlights;
+            tempTickets = tempTickets.Where(ticket => ticket.Flight.Class.Price == price).ToList();
+        return tempTickets;
 
     }
 }

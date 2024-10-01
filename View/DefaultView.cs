@@ -19,6 +19,10 @@ public static class DefaultView
             else if (authenticatedUser.Role == Utils.UserRole.ADMIN)
             {
                 //admin view display feature.
+                AdminView.admin = authenticatedUser;
+                AdminViewModel avm = new(authenticatedUser);
+                AdminView.adminViewModel = avm;
+                AdminView.DisplayChoices();
             }
             else
             {
