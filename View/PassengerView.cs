@@ -50,6 +50,7 @@ public class PassengerView
                         DisplayFilterFlights();
                         break;
                     case PassengerFeatures.EXIT:
+                        passengerviewModel.SaveAll();
                         exit = true;
                         break;
                     default:
@@ -255,7 +256,7 @@ public class PassengerView
             _destinationAirport,
             _flightClass);
 
-        if(!result.Any())
+        if(result is null || !result.Any())
         { 
             Console.WriteLine("Sorry: No results match you need.");
             return;
