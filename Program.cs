@@ -1,4 +1,7 @@
-﻿using AirportTicketBooking.View;
+﻿using AirportTicketBooking.Model.Repositories;
+using AirportTicketBooking.View;
+using AirportTicketBooking.ViewModel;
+using AirportTicketBooking.Utils;
 
 namespace TicketBooking;
 
@@ -18,6 +21,22 @@ public class Program
             Console.WriteLine("Invalid login credentials.");
             return;
         }  
-        DefaultView.Login(email, password);
+        var authenticatedUser = UserRepository.Login(email, password);
+
+        if (authenticatedUser == null)
+        {
+            Console.WriteLine("Failed to login.");
+        }
+        else if (authenticatedUser.Role == UserRole.ADMIN)
+        {
+            //admin view display feature.
+            AdminView adminView = new(authenticatedUser);
+            adminView.DisplayChoices();
+        }
+        else
+        {
+            PassengerView passengerView = new(authenticatedUser);
+            passengerView.DisplayFeatures();
+        }
     }
 }
