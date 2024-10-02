@@ -7,4 +7,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="Model\.csv service\Class map\FlightClassMap.cs" />
+    <Compile Include="Model\.csv service\Class map\TicketClassMap.cs" />
+    <Compile Include="Model\.csv service\Class map\UserClassMap.cs" />
+    <Compile Include="Model\.csv service\Csv Readers\CsvFlightReader.cs" />
+    <Compile Include="Model\.csv service\Csv Readers\CsvTicketReader.cs" />
+    <Compile Include="Model\.csv service\Csv Readers\CsvUserReader.cs" />
+    <Compile Include="Model\.csv service\Csv Readers\ICsvReader.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="33.0.1" />
+  </ItemGroup>
+
 </Project>

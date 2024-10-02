@@ -43,7 +43,7 @@ public class PassengerViewModel
             return null;
         else
         {  
-            if (_flight.Class.Seats <= 0)
+            if (_flight.AvailableSeats <= 0)
             {
                 Console.WriteLine("Sorry: No empty seats.");
                 return null;
@@ -60,7 +60,7 @@ public class PassengerViewModel
                     Time = _flight.Time
 
                 };
-                _flight.Class.Seats -= 1;
+                _flight.AvailableSeats -= 1;
                 return _ticketRepository.Save(ticket);
                 
             }
@@ -108,9 +108,9 @@ public class PassengerViewModel
         if (destinationAirport != null)
             tempFlights = tempFlights.Where(flight => flight.DestinationAirport == destinationAirport).ToList();
         if (Class != null)
-            tempFlights = tempFlights.Where(flight => flight.Class.Type == Class).ToList();
+            tempFlights = tempFlights.Where(flight => flight.Class == Class).ToList();
         if(price != null)
-            tempFlights = tempFlights.Where(flight => flight.Class.Price >= price).ToList();
+            tempFlights = tempFlights.Where(flight => flight.Price >= price).ToList();
         return tempFlights;
 
     }
