@@ -3,7 +3,7 @@ using CsvHelper.Configuration;
 
 namespace AirportTicketBooking.Model.csv_service.Class_map;
 
-internal class FlightClassMap: ClassMap<Flight>
+public class FlightClassMap: ClassMap<Flight>
 {
     public FlightClassMap()
     {

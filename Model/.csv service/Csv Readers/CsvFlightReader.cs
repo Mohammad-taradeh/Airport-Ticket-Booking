@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace AirportTicketBooking.Model.csv_service.Csv_Readers;
 
-internal class CsvFlightReader : ICsvReader<Flight>
+public class CsvFlightReader : ICsvReader<Flight>
 {
     public List<Flight> Read()
     {
