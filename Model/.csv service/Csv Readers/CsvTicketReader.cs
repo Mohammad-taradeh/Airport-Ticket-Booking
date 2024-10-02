@@ -21,6 +21,15 @@ public class CsvTicketReader: ICsvReader<Ticket>
 
     public bool Write(List<Ticket> data)
     {
-        throw new NotImplementedException();
+        var ticketsCsvPath = Path.Combine(Environment.CurrentDirectory, $"tickets.csv");
+        using (var streamWriter = new StreamWriter(ticketsCsvPath))
+        {
+            using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
+            {
+                csvWriter.Context.RegisterClassMap<TicketClassMap>();
+                csvWriter.WriteRecord(data);
+                return true;
+            }
+        }
     }
 }

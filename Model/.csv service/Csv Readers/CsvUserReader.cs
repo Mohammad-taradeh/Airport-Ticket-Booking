@@ -20,6 +20,15 @@ public class CsvUserReader : ICsvReader<User>
 
     bool ICsvReader<User>.Write(List<User> data)
     {
-        throw new NotImplementedException();
+        var usersCsvPath = Path.Combine(Environment.CurrentDirectory, $"users.csv");
+        using (var streamWriter =  new StreamWriter(usersCsvPath))
+        {
+            using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
+            {
+                csvWriter.Context.RegisterClassMap<UserClassMap>();
+                csvWriter.WriteRecord(data);
+                return true;
+            }
+        }
     }
 }

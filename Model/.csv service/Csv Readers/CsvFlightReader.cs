@@ -21,6 +21,15 @@ public class CsvFlightReader : ICsvReader<Flight>
 
     public bool Write(List<Flight> data)
     {
-        throw new NotImplementedException();
+        var flightsCsvPath = Path.Combine(Environment.CurrentDirectory, $"flights.csv");
+        using (var streamWriter = new StreamWriter(flightsCsvPath))
+        {
+            using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
+            {
+                csvWriter.Context.RegisterClassMap<FlightClassMap>();
+                csvWriter.WriteRecord(data);
+                return true;
+            }
+        }
     }
 }
