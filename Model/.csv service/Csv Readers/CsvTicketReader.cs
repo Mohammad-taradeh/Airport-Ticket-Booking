@@ -9,7 +9,7 @@ public class CsvTicketReader: ICsvReader<Ticket>
 {
     public List<Ticket> Read()
     {
-        using var streamReader = new StreamReader(@"C:\Users\Lenovo\source\repos\AirportTicketBookingSolution\data\tickets.csv>");
+        using var streamReader = new StreamReader(Path.Combine(Environment.CurrentDirectory, $"tickets.csv"));
         using var csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture);
         csvReader.Context.RegisterClassMap<TicketClassMap>();
         return csvReader.GetRecords<Ticket>().ToList();

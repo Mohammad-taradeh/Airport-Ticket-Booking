@@ -82,32 +82,26 @@ public class PassengerViewModel
         }
     }
     
-    public List<Flight>? FillterFlights(double? price,
-        Country? departureCountrie,
-        Country? destinationCountrie,
-        TimeSpan? date,
-        Airport? departureAirport,
-        Airport? destinationAirport,
-        FlightClassType? Class)
+    public List<Flight>? FillterFlights(Flight? search)
     {
         var tempFlights = _flightRepository.GetAll();
-        if (tempFlights is null)
+        if (tempFlights is null || search is null)
             return null;
-        if (departureCountrie != null)
-            tempFlights = tempFlights.Where(flight => flight.DepartureCountry == departureCountrie).ToList();
-        if (destinationCountrie != null)
-            tempFlights = tempFlights.Where(flight => flight.DestinationCountry == destinationCountrie).ToList();
-        if (date != null)
-            tempFlights = tempFlights.Where(flight => flight.Time >= date).ToList();
+        if (search?.DepartureCountry != Country.NULL)
+            tempFlights = tempFlights.Where(flight => flight.DepartureCountry == search?.DepartureCountry).ToList();
+        if (search?.DestinationCountry != Country.NULL)
+            tempFlights = tempFlights.Where(flight => flight.DestinationCountry == search?.DestinationCountry).ToList();
+        if (search?.Time != null)
+            tempFlights = tempFlights.Where(flight => flight.Time >= search.Time).ToList();
         //Equality Comparer
-        if (departureAirport != null)
-            tempFlights = tempFlights.Where(flight => flight.DepartureAirport == departureAirport).ToList();
-        if (destinationAirport != null)
-            tempFlights = tempFlights.Where(flight => flight.DestinationAirport == destinationAirport).ToList();
-        if (Class != null)
-            tempFlights = tempFlights.Where(flight => flight.Class == Class).ToList();
-        if(price != null)
-            tempFlights = tempFlights.Where(flight => flight.Price >= price).ToList();
+        if (search?.DepartureAirport != Airport.NULL)
+            tempFlights = tempFlights.Where(flight => flight.DepartureAirport == search?.DepartureAirport).ToList();
+        if (search?.DestinationAirport != Airport.NULL)
+            tempFlights = tempFlights.Where(flight => flight.DestinationAirport == search?.DestinationAirport).ToList();
+        if (search?.Class != FlightClassType.NULL)
+            tempFlights = tempFlights.Where(flight => flight.Class == search?.Class).ToList();
+        if(search?.Price != double.MaxValue)
+            tempFlights = tempFlights.Where(flight => flight.Price >= search?.Price).ToList();
         return tempFlights;
 
     }

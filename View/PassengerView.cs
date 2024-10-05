@@ -135,8 +135,8 @@ public class PassengerView
             return;
         }
         Console.WriteLine("Here are the abalibale flights:");
-        var flights = passengerviewModel.FillterFlights(null, null, null, null, null, null, null);
-        if(flights.Any() )
+        var flights = passengerviewModel.FillterFlights(null);
+        if(flights is not null && flights.Any() )
         {
             StringBuilder sb = new();
             foreach( var _flight in flights )
@@ -248,13 +248,18 @@ public class PassengerView
             _date = date;
         else
             Console.WriteLine("Empty Input");
-        var result = passengerviewModel.FillterFlights(_price,
-            _departureCountry,
-            _destinationCountry,
-            _date,
-            _departureAirport,
-            _destinationAirport,
-            _flightClass);
+        Flight flightSearchOpeions = new()
+        {
+            
+            Price = _price?? double.MaxValue,
+            DepartureAirport = _departureAirport ?? Airport.NULL,
+            DestinationAirport = _destinationAirport ?? Airport.NULL,
+            DepartureCountry = _departureCountry ?? Country.NULL,
+            DestinationCountry = _destinationCountry ?? Country.NULL,
+            Class = _flightClass ?? FlightClassType.NULL
+
+        };
+        var result = passengerviewModel.FillterFlights(flightSearchOpeions);
 
         if(result is null || !result.Any())
         { 

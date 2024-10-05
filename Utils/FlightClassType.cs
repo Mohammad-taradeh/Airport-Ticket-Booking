@@ -3,5 +3,6 @@ public enum FlightClassType
 {
     Economy = 1,
     Business = 2,
-    First_Class = 3
+    First_Class = 3,
+    NULL = 4
 }
