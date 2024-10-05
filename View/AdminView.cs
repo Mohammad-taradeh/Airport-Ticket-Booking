@@ -3,6 +3,7 @@ using AirportTicketBooking.Model.csv_service.Csv_Readers;
 using AirportTicketBooking.Model.Repositories;
 using AirportTicketBooking.Utils;
 using AirportTicketBooking.ViewModel;
+using System.Text;
 
 namespace AirportTicketBooking.View;
 
@@ -39,13 +40,14 @@ public class AdminView
                 switch (choice)
                 {
                     case AdminOptions.DISPLAY_FLIGHTS:
-                        
+                        DisplayFlights();
                         break;
                     case AdminOptions.DISPLAY_BOOKINGS:
-                        DisplayFilterBookings();
+                        DisplayBookings();
                         break;
                     case AdminOptions.SEARCH_BOOKING:
-                            break;
+                        DisplaySearchBooking();
+                        break;
                     case AdminOptions.UPLOAD_FLIGHTS:
                         DisplayUploadFlights();
                         break;
@@ -63,10 +65,36 @@ public class AdminView
 
         }
     }
-    public void DisplayFilterBookings()
+    public void DisplayBookings()
     {
-        //adminViewModel.FillterFlights();
+        var tickets = _adminViewModel.AllBookings();
+        if(tickets == null || !tickets.Any())
+        {
+            Console.WriteLine("There are no Bookings not.");
+            return;
+        }
+        foreach(var ticket in tickets)
+        {
+            Console.WriteLine(ticket.ToString());
+            Console.WriteLine();
+        }
+        Console.WriteLine();
 
+    }
+    public void DisplayFlights()
+    {
+        var _flights = _adminViewModel.AllFlights();
+        if (_flights == null || !_flights.Any())
+        {
+            Console.WriteLine("There are no Flighs now.");
+            return;
+        }
+        foreach(var flight in _flights)
+        {
+            Console.WriteLine(flight.ToString());
+            Console.WriteLine();
+        }
+        Console.WriteLine();
     }
     public void DisplayUploadFlights()
     {
@@ -88,5 +116,9 @@ public class AdminView
             Console.WriteLine(flight.ToString());
         }
         
+    }
+    public void DisplaySearchBooking()
+    {
+
     }
 }

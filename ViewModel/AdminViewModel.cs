@@ -8,7 +8,6 @@ namespace AirportTicketBooking.ViewModel;
 public class AdminViewModel
 {
     private User _admin;
-    //private static List<Flight> _flights = FlightRepository.GetAllFlights();
     private TicketRepository _ticketRepository;
     private FlightRepository _flightRepository;
     public AdminViewModel(User admin)
@@ -19,30 +18,31 @@ public class AdminViewModel
     }
     public List<Flight>? AllFlights() => _flightRepository.GetAll();
     public List<Ticket>? AllBookings() => _ticketRepository.GetAll();
-    public List<Ticket>? FillterBookings(
-        long? id,
-        long? passengerID,
-        long? flightID,
-        Airport departureAirport,
-        Airport destinationAirport,
-        TimeSpan time
-        )
+    public List<Ticket>? FillterBookings(Ticket? search)
     {
         var tempTickets = _ticketRepository.GetAll();
-        if (tempTickets is null)
+
+        if (tempTickets is null || search is null)
             return null;
-        if (id != null)
-            tempTickets = tempTickets.Where(ticket => ticket.Id == id).ToList();
-        if (id != null)
-            tempTickets = tempTickets.Where(ticket => ticket.Passenger == passengerID).ToList();
-        if (id != null)
-            tempTickets = tempTickets.Where(ticket => ticket.Flight == flightID).ToList();
-        if (id != null)
-            tempTickets = tempTickets.Where(ticket => ticket.DepartureAirport == departureAirport).ToList();
-        if (id != null)
-            tempTickets = tempTickets.Where(ticket => ticket.DestinationAirport == destinationAirport).ToList();
-        if (id != null)
-            tempTickets = tempTickets.Where(ticket => ticket.Time >= time).ToList();
+
+        if (search?.Id != long.MaxValue)
+            tempTickets = tempTickets.Where(ticket => ticket.Id == search?.Id).ToList();
+
+        if (search?.Passenger != long.MaxValue)
+            tempTickets = tempTickets.Where(ticket => ticket.Passenger == search?.Passenger).ToList();
+
+        if (search?.Flight != long.MaxValue)
+            tempTickets = tempTickets.Where(ticket => ticket.Flight == search?.Flight).ToList();
+
+        if (search?.DepartureAirport != Airport.NULL)
+            tempTickets = tempTickets.Where(ticket => ticket.DepartureAirport == search?.DepartureAirport).ToList();
+
+        if (search?.DestinationAirport != Airport.NULL)
+            tempTickets = tempTickets.Where(ticket => ticket.DestinationAirport == search?.DestinationAirport).ToList();
+
+        if (search?.Time != null)
+            tempTickets = tempTickets.Where(ticket => ticket.Time >= search.Time).ToList();
+
         return tempTickets;
 
     }
