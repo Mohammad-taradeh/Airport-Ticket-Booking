@@ -1,24 +1,22 @@
 ﻿using AirportTicketBooking.EqualityComparer;
 using AirportTicketBooking.Model.Classes;
+using AirportTicketBooking.Model.csv_service.Csv_Readers;
 
 namespace AirportTicketBooking.Model.Repositories;
-
 public class TicketRepository : IRepository<Ticket>
 {
-    private static List<Ticket> _tickets = new();
+    private static List<Ticket> _tickets = ReadTicketsFromFile();
     private static TicketEqualityComparer TicketEqualityComparer = new TicketEqualityComparer();
 
-    public static void ReadTicketsFromFile()
+    public static List<Ticket> ReadTicketsFromFile()
     {
-        _tickets = new List<Ticket>()
-        {
-            new Ticket(){ Flight = long.Parse("1"),
-            Passenger = long.Parse("1"),
-            Time = TimeSpan.FromMinutes(50),
-            DepartureAirport = Utils.Airport.QueenAliaInternationalAirport,
-            DestinationAirport = Utils.Airport.QueenAliaInternationalAirport
-            }
-        };
+        CsvTicketReader reader = new CsvTicketReader();
+        return reader.Read();
+    }
+    public static void WriteTicketsToFile()
+    {
+        CsvTicketReader writer = new();
+        writer.Write(_tickets);
     }
     public List<Ticket>? GetAllTickets (long userID)
     {
@@ -31,8 +29,8 @@ public class TicketRepository : IRepository<Ticket>
 
     public Ticket? Save(Ticket item)
     {
-        bool exist = _tickets.Contains(item, TicketEqualityComparer);
-        if (exist)
+        bool isExist = _tickets.Contains(item, TicketEqualityComparer);
+        if (isExist)
             return null;
         _tickets.Add(item);
         return item;
@@ -50,19 +48,10 @@ public class TicketRepository : IRepository<Ticket>
         else return null;
     }
 
-    public Ticket? FindById(long id)
-    {
-        if (_tickets == null) return null;
-        return _tickets.SingleOrDefault(ticket => ticket.Id == id);
-    }
-    public List<Ticket>? FindByUser(long userId)
-    {
-        if (_tickets == null) return null;
-        return _tickets.Where(ticket => ticket.Passenger ==  userId).ToList();
-    }
+    public Ticket? FindById(long id) => _tickets.SingleOrDefault(ticket => ticket.Id == id);
+    public List<Ticket>? FindByUser(long userId) => _tickets.Where(ticket => ticket.Passenger == userId).ToList();
     public Ticket? Update(long ID, Ticket item)
     {
-        if (_tickets == null) return null;
         Ticket? oldTicket = _tickets.SingleOrDefault(ticket => ticket.Id == ID);
         bool exist = _tickets.Contains(item, TicketEqualityComparer);
         if (oldTicket is null || !exist)
@@ -74,10 +63,5 @@ public class TicketRepository : IRepository<Ticket>
 
     }
 
-    public List<Ticket>? GetAll()
-    {
-        if(_tickets == null)
-            return null;
-        else return _tickets;
-    }
+    public List<Ticket>? GetAll() => _tickets;
 }

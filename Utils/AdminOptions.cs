@@ -2,8 +2,10 @@
 
 public enum AdminOptions
 {
-    FILTER_BOOKINGS = 1,
-    UPLOAD_FLIGHTS = 2,
-    EXIT = 3
+    DISPLAY_FLIGHTS = 1,
+    DISPLAY_BOOKINGS = 2,
+    SEARCH_BOOKING = 3,
+    UPLOAD_FLIGHTS = 4,
+    EXIT = 5
 
 }

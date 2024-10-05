@@ -1,4 +1,5 @@
 ﻿using AirportTicketBooking.Model.Classes;
+using AirportTicketBooking.Model.csv_service.Csv_Readers;
 using AirportTicketBooking.Model.Repositories;
 using AirportTicketBooking.Utils;
 
@@ -8,39 +9,61 @@ public class AdminViewModel
 {
     private User _admin;
     //private static List<Flight> _flights = FlightRepository.GetAllFlights();
-    private  static TicketRepository _ticketRepository = new TicketRepository();
-    private List<Ticket>? _tickets = _ticketRepository.GetAll().ToList();
+    private TicketRepository _ticketRepository;
+    private FlightRepository _flightRepository;
     public AdminViewModel(User admin)
     {
         this._admin = admin;
+        _ticketRepository = new();
+        _flightRepository = new();
     }
-    //public List<Ticket>? FillterFlights(
-    //    double? price,
-    //    String? departureCountrie,
-    //    String? destinationCountrie,
-    //    TimeSpan? date,
-    //    Airport? departureAirport,
-    //    Airport? destinationAirport,
-    //    FlightClassType? Class)
-    //{
-    //    var tempTickets = _tickets;
-    //    if (tempTickets is null || !tempTickets.Any())
-    //        return null;
-    //    if (departureCountrie != null)
-    //        tempTickets = tempTickets.Where(ticket => ticket.Flight == (Country)Enum.Parse(typeof(Country), departureCountrie)).ToList();
-    //    if (destinationCountrie != null)
-    //        tempTickets = tempTickets.Where(ticket => ticket.Flight.DestinationCountry == (Country)Enum.Parse(typeof(Country), destinationCountrie)).ToList();
-    //    if (date != null)
-    //        tempTickets = tempTickets.Where(ticket => ticket.Time >= date).ToList();
-    //    if (departureAirport != null)
-    //        tempTickets = tempTickets.Where(ticket => ticket.DepartureAirport == departureAirport).ToList();
-    //    if (destinationAirport != null)
-    //        tempTickets = tempTickets.Where(ticket => ticket.DestinationAirport == destinationAirport).ToList();
-    //    if (Class != null)
-    //        tempTickets = tempTickets.Where(ticket => ticket.Flight.Class.Type == Class).ToList();
-    //    if(price != null)
-    //        tempTickets = tempTickets.Where(ticket => ticket.Flight.Class.Price == price).ToList();
-    //    return tempTickets;
+    public List<Flight>? AllFlights() => _flightRepository.GetAll();
+    public List<Ticket>? AllBookings() => _ticketRepository.GetAll();
+    public List<Ticket>? FillterBookings(
+        long? id,
+        long? passengerID,
+        long? flightID,
+        Airport departureAirport,
+        Airport destinationAirport,
+        TimeSpan time
+        )
+    {
+        var tempTickets = _ticketRepository.GetAll();
+        if (tempTickets is null)
+            return null;
+        if (id != null)
+            tempTickets = tempTickets.Where(ticket => ticket.Id == id).ToList();
+        if (id != null)
+            tempTickets = tempTickets.Where(ticket => ticket.Passenger == passengerID).ToList();
+        if (id != null)
+            tempTickets = tempTickets.Where(ticket => ticket.Flight == flightID).ToList();
+        if (id != null)
+            tempTickets = tempTickets.Where(ticket => ticket.DepartureAirport == departureAirport).ToList();
+        if (id != null)
+            tempTickets = tempTickets.Where(ticket => ticket.DestinationAirport == destinationAirport).ToList();
+        if (id != null)
+            tempTickets = tempTickets.Where(ticket => ticket.Time >= time).ToList();
+        return tempTickets;
 
-    //}
+    }
+    public List<Flight>? UploadFlights()
+    {
+        FlightRepository.ReadFlightsFromFile();
+        return _flightRepository.GetAll();
+    }
+    public void SaveAll()
+    {
+        CsvFlightReader flightReader = new();
+        CsvTicketReader ticketReader = new();
+        List<Flight>? allFlights = _flightRepository.GetAll();
+        List<Ticket>? allTickets = _ticketRepository.GetAll();
+        if (allFlights != null && allTickets != null)
+        {
+            flightReader.Write(allFlights);
+            ticketReader.Write(allTickets);
+            Console.WriteLine("Changes saved.");
+        }
+        else
+            Console.WriteLine("Nothing to save.");
+    }
 }

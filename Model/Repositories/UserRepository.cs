@@ -1,25 +1,35 @@
 ﻿using AirportTicketBooking.Model.Classes;
-using System.Runtime.CompilerServices;
+using AirportTicketBooking.Model.csv_service.Csv_Readers;
 
 namespace AirportTicketBooking.Model.Repositories;
-
 public static class UserRepository
 {
-    private static List<User> _users;
+
+    private static List<User> _users = ReadUsersFromFile();
     public static List<User> GetAllUsers()
     {
-        _users = ReadUsersFromFile();
         return _users;
     }
     public static List<User> ReadUsersFromFile()
     {
-        //TODO
-        //Just for testing
-        return new List<User>()
+        CsvUserReader reader = new();
+        return reader.Read();
+    }
+    public static void WriteUsersToFile()
+    {
+        CsvUserReader writer = new();
+        writer.Write(_users);
+    }
+    public static User? Login(string email, string password)
+    {
+        try
+        { 
+            return _users.SingleOrDefault(user => user.Email == email && user.Password == password);
+        }
+        catch (Exception ex)
         {
-            new User(){Name = "Mohammad", Email = "201160@ppu.edu.ps", Password = "123", Role = Utils.UserRole.ADMIN},
-            new User(){Name = "Ahmad", Email = "201161ppu.edu.ps", Password = "456", Role = Utils.UserRole.PASSENGER},
-            new User(){Name = "Ibrahim", Email = "201162@ppu.edu.ps", Password = "789", Role = Utils.UserRole.PASSENGER}
-        };
+            Console.WriteLine(ex.Message);
+            return null;
+        }
     }
 }

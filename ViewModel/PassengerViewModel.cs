@@ -1,25 +1,23 @@
 ﻿using AirportTicketBooking.Model.Classes;
+using AirportTicketBooking.Model.csv_service.Csv_Readers;
 using AirportTicketBooking.Model.Repositories;
 using AirportTicketBooking.Utils;
 
 namespace AirportTicketBooking.ViewModel;
-
 public class PassengerViewModel
 {
     public User Passenger { get; init; }
-    private List<Flight> _flights = FlightRepository.GetAllFlights();
+    private FlightRepository _flightRepository;
     private TicketRepository _ticketRepository;
-    //private List<Ticket> _tickets = _ticketRepository.FindByUser(passenger.Id);
 
     public PassengerViewModel(User user)
     {
         Passenger = user;
         _ticketRepository = new TicketRepository();
+        _flightRepository = new FlightRepository();
     }
-    public List<Ticket>? ViewBookings()
-    {
-        return _ticketRepository.FindByUser(Passenger.Id);
-    }
+    public List<Ticket>? ViewBookings() => _ticketRepository.FindByUser(Passenger.Id);
+    public Flight? FindFlightByID(long id) => _flightRepository.FindById(id);
     public Ticket? CancelTicket(Ticket? ticket, long? ticketId)
     {
         if (ticketId is null && ticket is not null)
@@ -38,12 +36,12 @@ public class PassengerViewModel
 
     public Ticket? BookFlight(long flightID)
     {
-        var _flight = FindFlightByID(flightID);
+        var _flight = _flightRepository.FindById(flightID);
         if (_flight == null)
             return null;
         else
         {  
-            if (_flight.Class.Seats <= 0)
+            if (_flight.AvailableSeats <= 0)
             {
                 Console.WriteLine("Sorry: No empty seats.");
                 return null;
@@ -60,7 +58,7 @@ public class PassengerViewModel
                     Time = _flight.Time
 
                 };
-                _flight.Class.Seats -= 1;
+                _flight.AvailableSeats -= 1;
                 return _ticketRepository.Save(ticket);
                 
             }
@@ -83,11 +81,8 @@ public class PassengerViewModel
             else Console.WriteLine("Failed to update your ticket.");
         }
     }
-    public Flight? FindFlightByID(long id)
-    {
-        return _flights.SingleOrDefault(flight => flight.Id == id);
-    }
-    public List<Flight> FillterFlights(double? price,
+    
+    public List<Flight>? FillterFlights(double? price,
         Country? departureCountrie,
         Country? destinationCountrie,
         TimeSpan? date,
@@ -95,7 +90,9 @@ public class PassengerViewModel
         Airport? destinationAirport,
         FlightClassType? Class)
     {
-        var tempFlights = _flights;
+        var tempFlights = _flightRepository.GetAll();
+        if (tempFlights is null)
+            return null;
         if (departureCountrie != null)
             tempFlights = tempFlights.Where(flight => flight.DepartureCountry == departureCountrie).ToList();
         if (destinationCountrie != null)
@@ -108,10 +105,26 @@ public class PassengerViewModel
         if (destinationAirport != null)
             tempFlights = tempFlights.Where(flight => flight.DestinationAirport == destinationAirport).ToList();
         if (Class != null)
-            tempFlights = tempFlights.Where(flight => flight.Class.Type == Class).ToList();
+            tempFlights = tempFlights.Where(flight => flight.Class == Class).ToList();
         if(price != null)
-            tempFlights = tempFlights.Where(flight => flight.Class.Price >= price).ToList();
+            tempFlights = tempFlights.Where(flight => flight.Price >= price).ToList();
         return tempFlights;
 
+    }
+
+    public void SaveAll()
+    {
+        CsvFlightReader flightReader = new();
+        CsvTicketReader ticketReader = new();
+        List<Flight>? allFlights = _flightRepository.GetAll();
+        List<Ticket>? allTickets = _ticketRepository.GetAll();
+        if (allFlights != null && allTickets != null)
+        {
+            flightReader.Write(allFlights);
+            ticketReader.Write(allTickets);
+            Console.WriteLine("Changes saved.");
+        }
+        else
+            Console.WriteLine("Nothing to save.");
     }
 }

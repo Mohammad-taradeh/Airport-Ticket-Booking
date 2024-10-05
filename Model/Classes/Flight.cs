@@ -12,7 +12,9 @@ public class Flight
     public Country DepartureCountry { get; set; }
     public Country DestinationCountry { get; set; }
     public TimeSpan Time { get; set; }
-    public FlightClass Class {  get; set; }
+    public FlightClassType Class {  get; set; }
+    public int AvailableSeats { get; set; } = 10;
+    public double Price { get; set; }
 
 
     public override string ToString()
@@ -21,9 +23,9 @@ public class Flight
         sb.AppendLine($"Flight ID: {Id}");
         sb.AppendLine($"From: {DepartureAirport} Airport");
         sb.AppendLine($"To: {DestinationAirport} Airport");
-        sb.AppendLine($"{Class.Type} class");
-        sb.AppendLine($"{Class.Seats} empty seats");
-        sb.AppendLine($"for {Class.Price} USD");
+        sb.AppendLine($"{Class} class");
+        sb.AppendLine($"{AvailableSeats} empty seats");
+        sb.AppendLine($"for {Price} USD");
         return sb.ToString();
     }
 }
