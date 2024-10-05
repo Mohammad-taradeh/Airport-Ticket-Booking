@@ -9,7 +9,8 @@ public class CsvUserReader : ICsvReader<User>
 {
     public List<User> Read()
     {
-        using var streamReader = new StreamReader(@"C:\Users\Lenovo\source\repos\AirportTicketBookingSolution\data\users.csv>");
+        Console.WriteLine($"{Environment.CurrentDirectory} read");
+        using var streamReader = new StreamReader(Path.Combine(Environment.CurrentDirectory, $"users.csv"));
         using var csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture);
         csvReader.Context.RegisterClassMap<UserClassMap>();
         return csvReader.GetRecords<User>().ToList();
@@ -17,6 +18,7 @@ public class CsvUserReader : ICsvReader<User>
 
     public bool Write(List<User> data)
     {
+        Console.WriteLine($"{ Environment.CurrentDirectory} write");
         var usersCsvPath = Path.Combine(Environment.CurrentDirectory, $"users.csv");
         using var streamWriter = new StreamWriter(usersCsvPath);
         using var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture);
