@@ -40,8 +40,8 @@ public class AdminViewModel
         if (search?.DestinationAirport != Airport.NULL)
             tempTickets = tempTickets.Where(ticket => ticket.DestinationAirport == search?.DestinationAirport).ToList();
 
-        if (search?.Time != null)
-            tempTickets = tempTickets.Where(ticket => ticket.Time >= search.Time).ToList();
+        if (search?.Time != TimeSpan.MinValue)
+            tempTickets = tempTickets.Where(ticket => ticket.Time >= search?.Time).ToList();
 
         return tempTickets;
 
