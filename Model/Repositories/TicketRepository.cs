@@ -1,6 +1,6 @@
 ﻿using AirportTicketBooking.EqualityComparer;
 using AirportTicketBooking.Model.Classes;
-using AirportTicketBooking.Model.csv_service.Csv_Readers;
+using AirportTicketBooking.Model.csvService.csvReaders;
 
 namespace AirportTicketBooking.Model.Repositories;
 public class TicketRepository : IRepository<Ticket>

@@ -1,5 +1,5 @@
 ﻿using AirportTicketBooking.Model.Classes;
-using AirportTicketBooking.Model.csv_service.Csv_Readers;
+using AirportTicketBooking.Model.csvService.csvReaders;
 
 namespace AirportTicketBooking.Model.Repositories;
 public class FlightRepository : IRepository<Flight>

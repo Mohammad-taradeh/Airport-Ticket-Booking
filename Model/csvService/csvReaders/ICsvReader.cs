@@ -1,4 +1,4 @@
-﻿namespace AirportTicketBooking.Model.csv_service;
+﻿namespace AirportTicketBooking.Model.csvService;
 
 public interface ICsvReader<T> where T : class
 {

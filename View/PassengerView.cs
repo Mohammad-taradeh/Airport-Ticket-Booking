@@ -101,7 +101,7 @@ public class PassengerView
     public void DisplayCancelBooking() 
     {
         if(passengerviewModel.ViewBookings() is null)
-        Console.WriteLine("Enter the id of the tecket you need to cancle:");
+            Console.WriteLine("Enter the id of the tecket you need to cancle:");
         var ticketID = Console.ReadLine();
         var boockings = passengerviewModel.ViewBookings();
         if(!String.IsNullOrEmpty(ticketID) && long.TryParse(ticketID, out var ID))
@@ -120,8 +120,6 @@ public class PassengerView
             }
                 
         }
-        //Todo: cancel be creating new ticket
-     
     }
     public void DisplayUpdateBooking() 
     {
@@ -148,8 +146,8 @@ public class PassengerView
             return;
         }
         Console.WriteLine("Enter the Flight id:");
-        var validFlightID = long.TryParse(Console.ReadLine(), out var flightID);
-        if(!validFlightID)
+        var isValidFlightID = long.TryParse(Console.ReadLine(), out var flightID);
+        if(!isValidFlightID)
         {
             Console.WriteLine("invalid id format.");
             return;
