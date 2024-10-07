@@ -115,66 +115,52 @@ public class AdminView
         }
         
     }
+    private T? ReadValue<T>(Type type, String name)
+    {
+        Console.WriteLine($"Enter the {name}, or leave it empty.");
+        var input = Console.ReadLine();
+        if (String.IsNullOrEmpty(input))
+        {
+            Console.WriteLine("Empty input");
+            return default;
+        }
+        return (T) Convert.ChangeType(input, type);
+    }
     public void DisplaySearchBooking()
     {
+        var x = ReadValue<double>(typeof(double), "price");
         //ID
-        Console.WriteLine("Enter the Ticket ID you want or leave it empty.");
-        var IDInput = Console.ReadLine();
-        long _ID = long.MaxValue;
-        if (!String.IsNullOrEmpty(IDInput) && long.TryParse(IDInput, out var ID))
+        var ID = ReadValue<long>(typeof(long), "ID");
+        var _ID = long.MaxValue;
+        if(ID != default)
             _ID = ID;
-        else
-            Console.WriteLine("Empty Input");
         Console.WriteLine();
         //Flight
-        Console.WriteLine("Enter the Flight ID you want or leave it empty.");
-        var flightInput = Console.ReadLine();
-        long _flightID = long.MaxValue;
-        if (!String.IsNullOrEmpty(flightInput) && long.TryParse(flightInput, out var flightID))
+        var flightID = ReadValue<long>(typeof(long), "Flight_ID");
+        var _flightID = long.MaxValue;
+        if(flightID != default)
             _flightID = flightID;
-        else
-            Console.WriteLine("Empty Input");
         Console.WriteLine();
         //passenger
-        Console.WriteLine("Enter the Passenger ID you want or leave it empty.");
-        var passengerInput = Console.ReadLine();
-        long _passengerID = long.MaxValue;
-        if (!String.IsNullOrEmpty(passengerInput) && long.TryParse(passengerInput, out var passengerID))
+        var passengerID = ReadValue<long>(typeof(long), "Passenger_ID");
+        var _passengerID = long.MaxValue;
+        if (passengerID != default)
             _passengerID = passengerID;
-        else
-            Console.WriteLine("Empty Input");
+        Console.WriteLine();
         //departure airport
-        Console.WriteLine("Enter the Departure Airport you want or leave it empty.");
-        var departureAirportInput = Console.ReadLine();
-        Airport _departureAirport = Airport.NULL;
-        if (!String.IsNullOrEmpty(departureAirportInput) && Enum.TryParse(typeof(Airport),
-            departureAirportInput, true,
-            out var departureAirport))
-            _departureAirport = (Airport)departureAirport;
-        else
-            Console.WriteLine("Empty Input");
+        var _departureAirport = ReadValue<Airport>(typeof(Airport), "Departure Airport");
         Console.WriteLine();
 
         //destination airport
-        Console.WriteLine("Enter the Destination Airport you want or leave it empty.");
-        var destinationAirportInput = Console.ReadLine();
-        Airport _destinationAirport = Airport.NULL;
-        if (!String.IsNullOrEmpty(destinationAirportInput) && Enum.TryParse(typeof(Airport),
-            destinationAirportInput, true,
-            out var destinationAirport))
-            _destinationAirport = (Airport)destinationAirport;
-        else
-            Console.WriteLine("Empty Input");
+        var _destinationAirport = ReadValue<Airport>(typeof(Airport), "Destination Airport");
         Console.WriteLine();
 
         //date
-        Console.WriteLine("Enter the Ticket date or leave it empty.");
-        var dateInput = Console.ReadLine();
+        var date = ReadValue<TimeSpan>(typeof(TimeSpan), "Time");
         TimeSpan _date = TimeSpan.MinValue;
-        if (!String.IsNullOrEmpty(dateInput) && TimeSpan.TryParse(dateInput, out var date))
+        if (date != default)
             _date = date;
-        else
-            Console.WriteLine("Empty Input");
+        Console.WriteLine();
         Ticket ticketSearchOpeions = new()
         {
             Id = _ID,

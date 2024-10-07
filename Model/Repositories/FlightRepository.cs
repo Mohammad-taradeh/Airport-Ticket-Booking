@@ -21,7 +21,7 @@ public class FlightRepository : IRepository<Flight>
 
     public Flight? Delete(Flight item)
     {
-        bool isExist = _flights.Where(flight => flight.Id == item.Id).Any();
+        var isExist = _flights.Where(flight => flight.Id == item.Id).Any();
         if (isExist)
             return null;
         _flights.Remove(item);
