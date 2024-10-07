@@ -90,14 +90,12 @@ public class PassengerView
             Console.WriteLine("You don't have any Bookings.");
         else 
         {
-            StringBuilder sb = new();
             foreach (Ticket ticket in bookings)
-            { 
-                sb.AppendLine(ticket.ToString());
-                sb.AppendLine("****************");
+            {
+                Console.WriteLine(ticket.ToString());
+                Console.WriteLine("****************");
             }
-            sb.AppendLine();
-            Console.WriteLine(sb.ToString());
+            Console.WriteLine();
         }
     }
     public void DisplayCancelBooking() 
@@ -138,12 +136,10 @@ public class PassengerView
         var flights = passengerviewModel.FillterFlights(null);
         if(flights is not null && flights.Any() )
         {
-            StringBuilder sb = new();
             foreach( var _flight in flights )
             {
-                sb.AppendLine(_flight.ToString());
+                Console.WriteLine(_flight.ToString());
             }
-            Console.WriteLine(sb.ToString());
             Console.WriteLine();
         }
         else
@@ -266,13 +262,11 @@ public class PassengerView
             Console.WriteLine("Sorry: No results match you need.");
             return;
         }
-        StringBuilder sb = new();
-        foreach (var flight in result)
-        { 
-            sb.AppendLine(flight.ToString());
-        }
         Console.WriteLine("How about these:");
-        Console.WriteLine(sb.ToString());
+        foreach (var flight in result)
+        {
+            Console.WriteLine(flight.ToString());
+        }
 
     }
 }

@@ -17,8 +17,8 @@ public class AdminView
     }
     public void DisplayChoices()
     {
-        bool exit = false;
-        while (exit != true)
+        var isExist = false;
+        while (isExist != true)
         {
             if(admin is null)
             {
@@ -51,7 +51,7 @@ public class AdminView
                         break;
                     case AdminOptions.EXIT:
                         _adminViewModel.SaveAll();
-                        exit = true;
+                        isExist = true;
                         break;
                     default:
                         Console.WriteLine("Wrong input.");
@@ -191,13 +191,11 @@ public class AdminView
             Console.WriteLine("Sorry: No results match you need.");
             return;
         }
-        StringBuilder sb = new();
+        Console.WriteLine("How about these:");
         foreach (var ticket in result)
         {
-            sb.AppendLine(ticket.ToString());
+            Console.WriteLine(ticket.ToString());
         }
-        Console.WriteLine("How about these:");
-        Console.WriteLine(sb.ToString());
         Console.WriteLine();
 
     }
