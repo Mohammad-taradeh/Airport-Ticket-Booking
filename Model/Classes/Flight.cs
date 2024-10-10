@@ -19,14 +19,12 @@ public class Flight
 
     public override string ToString()
     {
-        StringBuilder sb = new StringBuilder();
-        sb.AppendLine($"Flight ID: {Id}");
-        sb.AppendLine($"From: {DepartureAirport} Airport");
-        sb.AppendLine($"To: {DestinationAirport} Airport");
-        sb.AppendLine($"{Class} class");
-        sb.AppendLine($"{AvailableSeats} empty seats");
-        sb.AppendLine($"for {Price} USD");
-        return sb.ToString();
+        return $"Flight ID: {Id}" +
+        $"From: {DepartureAirport} Airport" +
+        $"To: {DestinationAirport} Airport" +
+        $"{Class} class" +
+        $"{AvailableSeats} empty seats" +
+       $"for {Price} USD";
     }
 }
 #nullable restore

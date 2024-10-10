@@ -1,9 +1,9 @@
 ﻿using CsvHelper;
 using System.Globalization;
 using AirportTicketBooking.Model.Classes;
-using AirportTicketBooking.Model.csv_service.Class_map;
+using AirportTicketBooking.Model.csvService.classMap;
 
-namespace AirportTicketBooking.Model.csv_service.Csv_Readers;
+namespace AirportTicketBooking.Model.csvService.csvReaders;
 
 public class CsvUserReader : ICsvReader<User>
 {

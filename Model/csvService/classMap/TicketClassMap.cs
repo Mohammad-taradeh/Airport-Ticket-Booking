@@ -1,7 +1,7 @@
 ﻿using AirportTicketBooking.Model.Classes;
 using CsvHelper.Configuration;
 
-namespace AirportTicketBooking.Model.csv_service.Class_map;
+namespace AirportTicketBooking.Model.csvService.classMap;
 
 public class TicketClassMap: ClassMap<Ticket>
 {

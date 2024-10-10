@@ -1,6 +1,6 @@
 ﻿using AirportTicketBooking.EqualityComparer;
 using AirportTicketBooking.Model.Classes;
-using AirportTicketBooking.Model.csv_service.Csv_Readers;
+using AirportTicketBooking.Model.csvService.csvReaders;
 
 namespace AirportTicketBooking.Model.Repositories;
 public class TicketRepository : IRepository<Ticket>
@@ -18,14 +18,7 @@ public class TicketRepository : IRepository<Ticket>
         CsvTicketReader writer = new();
         writer.Write(_tickets);
     }
-    public List<Ticket>? GetAllTickets (long userID)
-    {
-        if (_tickets == null)
-            return null;
-
-        return _tickets.Where(ticket => ticket.Passenger == userID).ToList();
-
-    }
+    public List<Ticket>? GetAllTickets (long userID) => _tickets.Where(ticket => ticket.Passenger == userID).ToList();
 
     public Ticket? Save(Ticket item)
     {

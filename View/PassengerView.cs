@@ -90,20 +90,18 @@ public class PassengerView
             Console.WriteLine("You don't have any Bookings.");
         else 
         {
-            StringBuilder sb = new();
             foreach (Ticket ticket in bookings)
-            { 
-                sb.AppendLine(ticket.ToString());
-                sb.AppendLine("****************");
+            {
+                Console.WriteLine(ticket.ToString());
+                Console.WriteLine("****************");
             }
-            sb.AppendLine();
-            Console.WriteLine(sb.ToString());
+            Console.WriteLine();
         }
     }
     public void DisplayCancelBooking() 
     {
         if(passengerviewModel.ViewBookings() is null)
-        Console.WriteLine("Enter the id of the tecket you need to cancle:");
+            Console.WriteLine("Enter the id of the tecket you need to cancle:");
         var ticketID = Console.ReadLine();
         var boockings = passengerviewModel.ViewBookings();
         if(!String.IsNullOrEmpty(ticketID) && long.TryParse(ticketID, out var ID))
@@ -122,8 +120,6 @@ public class PassengerView
             }
                 
         }
-        //Todo: cancel be creating new ticket
-     
     }
     public void DisplayUpdateBooking() 
     {
@@ -138,12 +134,10 @@ public class PassengerView
         var flights = passengerviewModel.FillterFlights(null);
         if(flights is not null && flights.Any() )
         {
-            StringBuilder sb = new();
             foreach( var _flight in flights )
             {
-                sb.AppendLine(_flight.ToString());
+                Console.WriteLine(_flight.ToString());
             }
-            Console.WriteLine(sb.ToString());
             Console.WriteLine();
         }
         else
@@ -152,8 +146,8 @@ public class PassengerView
             return;
         }
         Console.WriteLine("Enter the Flight id:");
-        var validFlightID = long.TryParse(Console.ReadLine(), out var flightID);
-        if(!validFlightID)
+        var isValidFlightID = long.TryParse(Console.ReadLine(), out var flightID);
+        if(!isValidFlightID)
         {
             Console.WriteLine("invalid id format.");
             return;
@@ -266,13 +260,11 @@ public class PassengerView
             Console.WriteLine("Sorry: No results match you need.");
             return;
         }
-        StringBuilder sb = new();
-        foreach (var flight in result)
-        { 
-            sb.AppendLine(flight.ToString());
-        }
         Console.WriteLine("How about these:");
-        Console.WriteLine(sb.ToString());
+        foreach (var flight in result)
+        {
+            Console.WriteLine(flight.ToString());
+        }
 
     }
 }
